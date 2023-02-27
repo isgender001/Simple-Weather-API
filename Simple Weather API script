@@ -1,0 +1,11 @@
+import requests
+
+def get_forecasts(city, api_key='26631f0f41b95fb9f5ac0df9a8f43c92', units='metric'):
+    url = f"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}&units={units}"
+    r = requests.get(url)
+    contents = r.json()
+    with open('forecast_data.txt', 'a') as file:
+        for dicty in contents['list']:
+            file.write(f"{dicty['dt_txt']}, {dicty['main']['temp']}, {dicty['weather'][0]['description']}\n")
+
+print(get_forecasts(city="Washington"))
